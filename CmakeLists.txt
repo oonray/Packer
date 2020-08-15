@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.6)
 
 set(CONAN_DISABLE_CHECK_COMPILER true)
 set(CMAKE_EXPORT_COMPILE_COMMANDS on)
+
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
@@ -9,11 +10,8 @@ project(dropper
     LANGUAGES CXX
     VERSION 1)
 
-include(build/conanbuildinfo.cmake)
-conan_basic_setup()
-
 add_executable(dropper
-    main.cpp
+    decryptor.cpp
     )
 
 add_executable(encrypter
@@ -21,10 +19,10 @@ add_executable(encrypter
     )
 
 target_link_libraries(encrypter  crypt32.lib)
-target_link_libraries(dropper  crypt32.lib)
+target_link_libraries(encrypter  advapi32.lib)
 
-target_link_libraries(encrypter  advapi32)
-target_link_libraries(dropper  advapi32)
+target_link_libraries(dropper  crypt32.lib)
+target_link_libraries(dropper  advapi32.lib)
 
 target_link_libraries(encrypter ${CONAN_LIBS})
 target_link_libraries(dropper ${CONAN_LIBS})
